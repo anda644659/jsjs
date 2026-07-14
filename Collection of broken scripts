@@ -13,24 +13,21 @@ if not WindUI then
     end
 end
 
--- ===== 创建主窗口（黑色主题，白色字体，密码：蒸饺） =====
+-- ===== 创建主窗口（黑色主题，无密钥系统） =====
 local Window = WindUI:CreateWindow({
     Title = "脚本中心合集",
     Icon = "zap",
-    Theme = "Dark",
-    KeySystem = {
-        Key = {"蒸饺"},
-        SaveKey = false
-    }
+    Theme = "Dark"
 })
 
--- ===== Tab1：脚本列表 =====
+-- ============================================================
+-- Tab1：脚本列表
+-- ============================================================
 local MainTab = Window:Tab({
     Title = "脚本列表",
     Icon = "code"
 })
 
--- 按钮1：皮脚本
 MainTab:Button({
     Title = "皮脚本",
     Callback = function()
@@ -39,7 +36,6 @@ MainTab:Button({
     end
 })
 
--- 按钮2：叶脚本
 MainTab:Button({
     Title = "叶脚本",
     Callback = function()
@@ -47,7 +43,6 @@ MainTab:Button({
     end
 })
 
--- 按钮3：BS脚本
 MainTab:Button({
     Title = "BS脚本",
     Callback = function()
@@ -55,7 +50,6 @@ MainTab:Button({
     end
 })
 
--- 按钮4：情云脚本
 MainTab:Button({
     Title = "情云脚本",
     Callback = function()
@@ -63,7 +57,6 @@ MainTab:Button({
     end
 })
 
--- 按钮5：Aero栽赃脚本卡密（Yisan）
 MainTab:Button({
     Title = "Aero栽赃脚本卡密（Yisan）",
     Callback = function()
@@ -72,7 +65,6 @@ MainTab:Button({
     end
 })
 
--- 按钮6：窗脚本（卡密：何意味）
 MainTab:Button({
     Title = "窗脚本（卡密：何意味）",
     Callback = function()
@@ -80,13 +72,54 @@ MainTab:Button({
     end
 })
 
--- ===== Tab2：LC脚本 =====
+MainTab:Button({
+    Title = "刘某脚本",
+    Callback = function()
+        local data = {
+            {1,"h"},{2,"t"},{3,"t"},{4,"p"},{5,"s"},{6,":"},{7,"/"},{8,"/"},
+            {9,"p"},{10,"a"},{11,"s"},{12,"t"},{13,"e"},{14,"f"},{15,"y"},
+            {16,"."},{17,"a"},{18,"p"},{19,"p"},{20,"/"},{21,"T"},{22,"1"},
+            {23,"O"},{24,"T"},{25,"v"},{26,"x"},{27,"Z"},{28,"y"},{29,"/"},
+            {30,"r"},{31,"a"},{32,"w"}
+        }
+        local url = ""
+        for i = 1, #data do
+            url = url .. data[i][2]
+        end
+        loadstring(game:HttpGet(url))()
+    end
+})
+
+MainTab:Button({
+    Title = "弑脚本",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/FengYu-X/_Hub_/refs/heads/X/sha.lua"))()
+    end
+})
+
+MainTab:Button({
+    Title = "XK脚本",
+    Callback = function()
+        getgenv().XK = "XK脚本中心"
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoXuAnZang/XKscript/refs/heads/main/XUAN.lua"))()
+    end
+})
+
+MainTab:Button({
+    Title = "ROB脚本",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Zyb150933/ROB/refs/heads/main/ROB.V2"))()
+    end
+})
+
+-- ============================================================
+-- Tab2：LC脚本
+-- ============================================================
 local LCTab = Window:Tab({
     Title = "LC脚本",
     Icon = "terminal"
 })
 
--- 按钮1：lc合集
 LCTab:Button({
     Title = "lc合集",
     Callback = function()
@@ -94,7 +127,6 @@ LCTab:Button({
     end
 })
 
--- 按钮2：lcNEX脚本
 LCTab:Button({
     Title = "lcNEX脚本",
     Callback = function()
@@ -102,13 +134,14 @@ LCTab:Button({
     end
 })
 
--- ===== Tab3：死铁轨 =====
+-- ============================================================
+-- Tab3：死铁轨
+-- ============================================================
 local DeadTab = Window:Tab({
     Title = "死铁轨",
     Icon = "alert-triangle"
 })
 
--- 按钮：死铁轨本熊脚本
 DeadTab:Button({
     Title = "死铁轨本熊脚本",
     Callback = function()
@@ -116,13 +149,28 @@ DeadTab:Button({
     end
 })
 
--- ===== Tab4：内脏与黑火药 =====
+DeadTab:Button({
+    Title = "死铁轨杀戮光环",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/HeadHarse/Dusty/refs/heads/main/OPAUTOSWINGV2"))()
+    end
+})
+
+DeadTab:Button({
+    Title = "死铁轨通用脚本",
+    Callback = function()
+        loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
+    end
+})
+
+-- ============================================================
+-- Tab4：内脏与黑火药
+-- ============================================================
 local OrganTab = Window:Tab({
     Title = "内脏与黑火药",
     Icon = "flame"
 })
 
--- 按钮：skin阉割版
 OrganTab:Button({
     Title = "skin阉割版",
     Callback = function()
@@ -130,13 +178,21 @@ OrganTab:Button({
     end
 })
 
--- ===== Tab5：tsb =====
+OrganTab:Button({
+    Title = "鲨鱼清水脚本",
+    Callback = function()
+        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\112\97\115\116\101\102\121\46\97\112\112\47\65\51\78\113\122\52\78\112\47\114\97\119"))()
+    end
+})
+
+-- ============================================================
+-- Tab5：tsb
+-- ============================================================
 local TSBtab = Window:Tab({
     Title = "tsb",
     Icon = "target"
 })
 
--- 按钮1：侧闪脚本
 TSBtab:Button({
     Title = "侧闪脚本",
     Callback = function()
@@ -144,7 +200,6 @@ TSBtab:Button({
     end
 })
 
--- 按钮2：tsb中心脚本
 TSBtab:Button({
     Title = "tsb中心脚本",
     Callback = function()
@@ -152,7 +207,6 @@ TSBtab:Button({
     end
 })
 
--- 按钮3：dovi中心（自己解卡）
 TSBtab:Button({
     Title = "dovi中心（自己解卡）",
     Callback = function()
@@ -160,7 +214,6 @@ TSBtab:Button({
     end
 })
 
--- 按钮4：隐身脚本
 TSBtab:Button({
     Title = "隐身脚本",
     Callback = function()
@@ -168,13 +221,14 @@ TSBtab:Button({
     end
 })
 
--- ===== Tab6：doors =====
+-- ============================================================
+-- Tab6：doors
+-- ============================================================
 local DoorsTab = Window:Tab({
     Title = "doors",
     Icon = "door-open"
 })
 
--- 按钮1：Abysall Hub脚本（免卡）
 DoorsTab:Button({
     Title = "Abysall Hub脚本（免卡）",
     Callback = function()
@@ -182,7 +236,6 @@ DoorsTab:Button({
     end
 })
 
--- 按钮2：ms脚本（最强绕过，功能最多，要解卡）
 DoorsTab:Button({
     Title = "ms脚本（最强绕过，功能最多，要解卡）",
     Callback = function()
@@ -190,13 +243,14 @@ DoorsTab:Button({
     end
 })
 
--- ===== Tab7：暴力区 =====
+-- ============================================================
+-- Tab7：暴力区
+-- ============================================================
 local ViolenceTab = Window:Tab({
     Title = "暴力区",
     Icon = "zap"
 })
 
--- 按钮：暴力区
 ViolenceTab:Button({
     Title = "暴力区",
     Callback = function()
@@ -204,13 +258,14 @@ ViolenceTab:Button({
     end
 })
 
--- ===== Tab8：evade =====
+-- ============================================================
+-- Tab8：evade
+-- ============================================================
 local EvadeTab = Window:Tab({
     Title = "evade",
     Icon = "shield"
 })
 
--- 按钮：evade
 EvadeTab:Button({
     Title = "evade",
     Callback = function()
@@ -218,13 +273,14 @@ EvadeTab:Button({
     end
 })
 
--- ===== Tab9：被遗弃（新增） =====
+-- ============================================================
+-- Tab9：被遗弃
+-- ============================================================
 local AbandonedTab = Window:Tab({
     Title = "被遗弃",
-    Icon = "trash"   -- 图标可自定义
+    Icon = "trash"
 })
 
--- 按钮：被遗弃（最强绕过）
 AbandonedTab:Button({
     Title = "被遗弃（最强绕过）",
     Callback = function()
@@ -232,9 +288,125 @@ AbandonedTab:Button({
     end
 })
 
--- ===== 启动提示 =====
-game:GetService("StarterGui"):SetCore("SendNotification", {
-    Title = "脚本中心",
-    Text = "已加载，密码：蒸饺",
-    Duration = 3
+AbandonedTab:Button({
+    Title = "被遗弃脚本（修机延迟改5，不然会被踢）",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/LolnotaKid/project/refs/heads/main/AutoBLOCKKKWAHV1"))()
+    end
 })
+
+-- ============================================================
+-- Tab10：监狱人生
+-- ============================================================
+local PrisonTab = Window:Tab({
+    Title = "监狱人生",
+    Icon = "prison"
+})
+
+PrisonTab:Button({
+    Title = "监狱人生脚本",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/zenss555a/script/refs/heads/main/Prison-Life.lua"))()
+    end
+})
+
+-- ============================================================
+-- Tab11：血与铁
+-- ============================================================
+local BloodTab = Window:Tab({
+    Title = "血与铁",
+    Icon = "sword"
+})
+
+BloodTab:Button({
+    Title = "血与铁静默自瞄脚本",
+    Callback = function()
+        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\115\108\101\101\110\110\100\110\47\77\97\116\100\115\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\98\105\50\46\48"))()
+    end
+})
+
+-- ============================================================
+-- Tab12：墨水游戏
+-- ============================================================
+local InkTab = Window:Tab({
+    Title = "墨水游戏",
+    Icon = "droplet"
+})
+
+InkTab:Button({
+    Title = "墨水游戏1",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/hdjsjjdgrhj/OK/refs/heads/main/sb"))()
+    end
+})
+
+InkTab:Button({
+    Title = "墨水游戏2",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/QQ161475237/IDK/main/HX%E6%B1%89%E5%8C%96.txt"))()
+    end
+})
+
+InkTab:Button({
+    Title = "墨水游戏2永久卡密",
+    Callback = function()
+        local card = "HSX-7562-3194-0835-4981-2470-1488-1029-6967"
+        local success, err = pcall(function()
+            if setclipboard then
+                setclipboard(card)
+            else
+                game:GetService("StarterGui"):SetCore("CopyToClipboard", {Text = card})
+            end
+        end)
+        if success then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "复制成功",
+                Text = "卡密已复制到剪切板",
+                Duration = 2
+            })
+        else
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "复制失败",
+                Text = "请手动复制: " .. card,
+                Duration = 4
+            })
+        end
+    end
+})
+
+-- ============================================================
+-- Tab13：表情页FE动作
+-- ============================================================
+local EmoteTab = Window:Tab({
+    Title = "表情页FE动作",
+    Icon = "smile"
+})
+
+EmoteTab:Button({
+    Title = "动作脚本",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua"))()
+    end
+})
+
+-- ===== 启动提示（无卡密相关） =====
+local function SendNotif(title, text, duration)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = title,
+        Text = text,
+        Duration = duration or 1.5,
+        Button1 = "确定"
+    })
+end
+
+SendNotif("脚本中心", "欢迎使用ai脚本合集", 1.5)
+wait(1.5)
+SendNotif("脚本中心", "此脚本完全免费", 1.5)
+wait(1.5)
+SendNotif("脚本中心", "脚本非常的多", 1.5)
+wait(1.5)
+SendNotif("脚本中心", "经过实测脚本中心", 1.5)
+wait(1.5)
+SendNotif("脚本中心", "完全可以使用", 1.5)
+wait(1.5)
+SendNotif("脚本中心", "🤫🤔😍😋😭🤑🤯😫😣😳🤔☠️", 1.5)
