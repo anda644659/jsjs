@@ -389,6 +389,197 @@ EmoteTab:Button({
     end
 })
 
+-- ============================================================
+-- Tab14：娱乐（新增）
+-- ============================================================
+local EntertainmentTab = Window:Tab({
+    Title = "娱乐",
+    Icon = "gamepad"
+})
+
+EntertainmentTab:Button({
+    Title = "ws仿真按键",
+    Callback = function()
+        -- ===== 你发的 WS 模拟脚本（速度版） =====
+        do
+            local player = game.Players.LocalPlayer
+            local gui = Instance.new("ScreenGui")
+            gui.Name = "移动控制中心"
+            gui.Parent = player:WaitForChild("PlayerGui")
+            gui.ResetOnSpawn = false
+
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(0, 240, 0, 180)
+            frame.Position = UDim2.new(0.5, -120, 0.5, -90)
+            frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+            frame.BackgroundTransparency = 0.15
+            frame.BorderColor3 = Color3.fromRGB(60, 60, 70)
+            frame.Parent = gui
+            frame.Active = true
+            frame.Draggable = true
+
+            local title = Instance.new("TextLabel")
+            title.Size = UDim2.new(1, 0, 0, 30)
+            title.Text = "🎮 移动控制 (速度版)"
+            title.TextColor3 = Color3.new(1, 1, 1)
+            title.BackgroundTransparency = 1
+            title.Font = Enum.Font.SourceSansBold
+            title.TextSize = 18
+            title.Parent = frame
+
+            local wsToggle = Instance.new("TextButton")
+            wsToggle.Size = UDim2.new(0, 200, 0, 35)
+            wsToggle.Position = UDim2.new(0.5, -100, 0, 40)
+            wsToggle.Text = "🔴 WS模拟 (关)"
+            wsToggle.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            wsToggle.TextColor3 = Color3.new(1, 1, 1)
+            wsToggle.BorderColor3 = Color3.fromRGB(80, 80, 90)
+            wsToggle.Font = Enum.Font.SourceSans
+            wsToggle.TextSize = 16
+            wsToggle.Parent = frame
+
+            local lockToggle = Instance.new("TextButton")
+            lockToggle.Size = UDim2.new(0, 200, 0, 35)
+            lockToggle.Position = UDim2.new(0.5, -100, 0, 85)
+            lockToggle.Text = "🔒 视角锁定 (关)"
+            lockToggle.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            lockToggle.TextColor3 = Color3.new(1, 1, 1)
+            lockToggle.BorderColor3 = Color3.fromRGB(80, 80, 90)
+            lockToggle.Font = Enum.Font.SourceSans
+            lockToggle.TextSize = 16
+            lockToggle.Parent = frame
+
+            local closeBtn = Instance.new("TextButton")
+            closeBtn.Size = UDim2.new(0, 30, 0, 30)
+            closeBtn.Position = UDim2.new(1, -35, 0, 0)
+            closeBtn.Text = "✕"
+            closeBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+            closeBtn.TextColor3 = Color3.new(1, 1, 1)
+            closeBtn.Font = Enum.Font.SourceSans
+            closeBtn.TextSize = 16
+            closeBtn.Parent = frame
+
+            -- 核心状态
+            local wsEnabled = false
+            local lockEnabled = false
+            local runningWS = false
+
+            local character = nil
+            local rootPart = nil
+            local humanoid = nil
+
+            local RunService = game:GetService("RunService")
+            local camera = workspace.CurrentCamera
+            local UserInputService = game:GetService("UserInputService")
+
+            local function updateChar()
+                character = player.Character
+                if character then
+                    rootPart = character:FindFirstChild("HumanoidRootPart")
+                    humanoid = character:FindFirstChildOfClass("Humanoid")
+                end
+            end
+            updateChar()
+            player.CharacterAdded:Connect(function(newChar)
+                character = newChar
+                rootPart = newChar:FindFirstChild("HumanoidRootPart")
+                humanoid = newChar:FindFirstChildOfClass("Humanoid")
+                if lockEnabled and humanoid then
+                    humanoid.AutoRotate = false
+                end
+            end)
+
+            -- ===== WS模拟（速度版，0.1秒切换） =====
+            local function wsLoop()
+                local direction = 1
+                local speed = 30
+                while runningWS and wsEnabled do
+                    if rootPart then
+                        local lookVec = camera.CFrame.LookVector
+                        lookVec = Vector3.new(lookVec.X, 0, lookVec.Z).Unit
+                        if lookVec.Magnitude < 0.01 then
+                            lookVec = Vector3.new(1, 0, 0)
+                        end
+                        rootPart.Velocity = lookVec * direction * speed
+                        direction = direction * -1
+                    end
+                    task.wait(0.1)
+                end
+                if rootPart then
+                    rootPart.Velocity = Vector3.new(0, 0, 0)
+                end
+            end
+
+            -- ===== 视角锁定 =====
+            RunService.RenderStepped:Connect(function()
+                if not lockEnabled then return end
+                if not rootPart or not humanoid then return end
+                local lookVec = camera.CFrame.LookVector
+                lookVec = Vector3.new(lookVec.X, 0, lookVec.Z).Unit
+                if lookVec.Magnitude > 0.01 then
+                    rootPart.CFrame = CFrame.lookAt(rootPart.Position, rootPart.Position + lookVec)
+                end
+            end)
+
+            -- ===== 开关事件 =====
+            wsToggle.MouseButton1Click:Connect(function()
+                wsEnabled = not wsEnabled
+                wsToggle.Text = wsEnabled and "🟢 WS模拟 (开)" or "🔴 WS模拟 (关)"
+                if wsEnabled then
+                    if not runningWS then
+                        runningWS = true
+                        task.spawn(wsLoop)
+                    end
+                else
+                    runningWS = false
+                end
+            end)
+
+            lockToggle.MouseButton1Click:Connect(function()
+                lockEnabled = not lockEnabled
+                lockToggle.Text = lockEnabled and "🔓 视角锁定 (开)" or "🔒 视角锁定 (关)"
+                if lockEnabled then
+                    UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+                    if humanoid then
+                        humanoid.AutoRotate = false
+                    end
+                else
+                    UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+                    if humanoid then
+                        humanoid.AutoRotate = true
+                    end
+                end
+            end)
+
+            closeBtn.MouseButton1Click:Connect(function()
+                runningWS = false
+                wsEnabled = false
+                lockEnabled = false
+                if rootPart then
+                    rootPart.Velocity = Vector3.new(0, 0, 0)
+                end
+                if humanoid then
+                    humanoid.AutoRotate = true
+                end
+                UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+                gui:Destroy()
+            end)
+
+            player.CameraMode = Enum.CameraMode.Classic
+            player.CharacterAdded:Connect(function()
+                task.wait(0.5)
+                local char = player.Character
+                if char then
+                    local hum = char:FindFirstChildOfClass("Humanoid")
+                    if hum then
+                        hum.AutoRotate = lockEnabled and false or true
+                    end
+                end
+            end)
+        end
+    end
+})
+
 -- ===== 启动提示（无卡密相关） =====
 local function SendNotif(title, text, duration)
     game:GetService("StarterGui"):SetCore("SendNotification", {
