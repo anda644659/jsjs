@@ -13,7 +13,7 @@ if not WindUI then
     end
 end
 
--- ===== 创建主窗口（黑色主题，无密钥系统） =====
+-- ===== 创建主窗口（黑色主题） =====
 local Window = WindUI:CreateWindow({
     Title = "脚本中心合集",
     Icon = "zap",
@@ -109,6 +109,14 @@ MainTab:Button({
     Title = "ROB脚本",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Zyb150933/ROB/refs/heads/main/ROB.V2"))()
+    end
+})
+
+MainTab:Button({
+    Title = "YI HUB",
+    Callback = function()
+        getgenv().YI_HUB = "YI_HUB群979312897"
+        loadstring(game:HttpGet('http://YI-Script.top'))("")
     end
 })
 
@@ -390,7 +398,7 @@ EmoteTab:Button({
 })
 
 -- ============================================================
--- Tab14：娱乐（新增）
+-- Tab14：娱乐
 -- ============================================================
 local EntertainmentTab = Window:Tab({
     Title = "娱乐",
@@ -400,7 +408,6 @@ local EntertainmentTab = Window:Tab({
 EntertainmentTab:Button({
     Title = "ws仿真按键",
     Callback = function()
-        -- ===== 你发的 WS 模拟脚本（速度版） =====
         do
             local player = game.Players.LocalPlayer
             local gui = Instance.new("ScreenGui")
@@ -459,7 +466,6 @@ EntertainmentTab:Button({
             closeBtn.TextSize = 16
             closeBtn.Parent = frame
 
-            -- 核心状态
             local wsEnabled = false
             local lockEnabled = false
             local runningWS = false
@@ -489,7 +495,6 @@ EntertainmentTab:Button({
                 end
             end)
 
-            -- ===== WS模拟（速度版，0.1秒切换） =====
             local function wsLoop()
                 local direction = 1
                 local speed = 30
@@ -510,7 +515,6 @@ EntertainmentTab:Button({
                 end
             end
 
-            -- ===== 视角锁定 =====
             RunService.RenderStepped:Connect(function()
                 if not lockEnabled then return end
                 if not rootPart or not humanoid then return end
@@ -521,7 +525,6 @@ EntertainmentTab:Button({
                 end
             end)
 
-            -- ===== 开关事件 =====
             wsToggle.MouseButton1Click:Connect(function()
                 wsEnabled = not wsEnabled
                 wsToggle.Text = wsEnabled and "🟢 WS模拟 (开)" or "🔴 WS模拟 (关)"
@@ -580,14 +583,16 @@ EntertainmentTab:Button({
     end
 })
 
--- ===== 启动提示（无卡密相关） =====
+-- ===== 启动通知 =====
 local function SendNotif(title, text, duration)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = title,
-        Text = text,
-        Duration = duration or 1.5,
-        Button1 = "确定"
-    })
+    pcall(function()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = title,
+            Text = text,
+            Duration = duration or 1.5,
+            Button1 = "确定"
+        })
+    end)
 end
 
 SendNotif("脚本中心", "欢迎使用ai脚本合集", 1.5)
@@ -601,3 +606,8 @@ wait(1.5)
 SendNotif("脚本中心", "完全可以使用", 1.5)
 wait(1.5)
 SendNotif("脚本中心", "🤫🤔😍😋😭🤑🤯😫😣😳🤔☠️", 1.5)
+
+-- ===== 欢迎用户通知（右下角） =====
+task.wait(0.5)
+local player = game.Players.LocalPlayer
+SendNotif("👤 欢迎", "欢迎 " .. player.Name .. " 使用本脚本", 2.5)
