@@ -1,9 +1,4 @@
-local key = syn.prompt("请输入卡密解锁脚本")
-if key ~= "星途牛逼" then
-    task.wait(0.2)
-        game:Shutdown()
-            return
-            end
+getgenv().SCRIPT_KEY = "KEYLESS"
 
 -- This file was protected using Luraph Obfuscator v14.7 [https://lura.ph/]
 
